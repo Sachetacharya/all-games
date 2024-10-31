@@ -1,0 +1,79 @@
+.board {
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  margin: 20px auto;
+  max-width: 500px;
+  background-color: #333;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.cell {
+  width: 60px;
+  height: 60px;
+  background-color: #fff;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+}
+
+.cell button {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.cell button::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: -100px; /* Start outside the cell */
+  border-radius: 50%;
+  background-color: transparent;
+  transition: top 0.4s ease-in;
+}
+
+.cell.player1 button::before {
+  background-color: red;
+}
+
+.cell.player2 button::before {
+  background-color: yellow;
+}
+
+.player1 button::before {
+  top: 0; /* Move to visible area */
+}
+
+.player2 button::before {
+  top: 0; /* Move to visible area */
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.restart-button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #555;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.restart-button:hover {
+  background-color: #777;
+}

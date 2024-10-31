@@ -1,0 +1,15 @@
+<div class="board">
+  <div *ngFor="let row of board; let rowIndex = index" class="row">
+    <div
+      *ngFor="let cell of row; let colIndex = index"
+      class="cell"
+      [@dropAnimation]="
+        cell === 1 ? 'player1' : cell === 2 ? 'player2' : 'void'
+      "
+      [ngClass]="{ player1: cell === 1, player2: cell === 2 }"
+    >
+      <button (click)="makeMove(colIndex)" [disabled]="gameOver"></button>
+    </div>
+  </div>
+</div>
+<button class="restart-button" (click)="resetGame()">Restart</button>

@@ -1,0 +1,32 @@
+<table *ngIf="players && players.length > 0">
+  <thead>
+    <tr>
+      <th>Player Name</th>
+      <th *ngFor="let round of rounds">Round {{ round + 1 }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let player of players">
+      <td>{{ player.name }}</td>
+      <td *ngFor="let round of rounds">
+        <input
+          type="number"
+          [ngModel]="getTricksWon(player.name, round)"
+          (ngModelChange)="setTricksWon(player.name, round, $event)"
+          placeholder="Tricks"
+        />
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<button (click)="calculateTricks()">Calculate Tricks</button>
+
+<div *ngIf="totalTricks">
+  <h3>Total Tricks Won:</h3>
+  <ul>
+    <li *ngFor="let player of players">
+      {{ player.name }}: {{ totalTricks[player.name] }}
+    </li>
+  </ul>
+</div>

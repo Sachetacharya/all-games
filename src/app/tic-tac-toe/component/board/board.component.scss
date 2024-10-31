@@ -1,0 +1,60 @@
+// Main container
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  gap: 5px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+// Game box styling
+app-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #f1f1f1;
+  border: 2px solid #888;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #ddd;
+  }
+
+  &:active {
+    background-color: #ccc;
+  }
+}
+
+// Current Player and Winner Status
+h1,
+h2 {
+  text-align: center;
+  margin: 0;
+}
+
+// Button styling
+button[nbButton] {
+  display: block;
+  margin: 0 auto 20px auto;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 8px 16px;
+  border: 2px solid #d9534f;
+  color: #d9534f;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+
+  &:hover {
+    background-color: #d9534f;
+    color: #fff;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}

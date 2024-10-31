@@ -1,0 +1,12 @@
+<h1>Current Player: {{ player }}</h1>
+
+<button nbButton outline status="danger" (click)="newGame()">
+  Start new Game
+</button>
+
+<h2 *ngIf="winner">Player {{ winner }} won the game!</h2>
+<div class="container">
+  @for (val of squares; track $index; let i = $index) {
+  <app-box [value]="val" (click)="makeMove(i)"> </app-box>
+  }
+</div>

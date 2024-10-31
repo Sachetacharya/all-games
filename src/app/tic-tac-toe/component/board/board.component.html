@@ -16,14 +16,18 @@
     Vs Computer
   </button>
 </div>
-<div class="start-game">
+<!-- <div class="start-game">
   <button class="start-game__button" (click)="newGame()">Start New Game</button>
-</div>
+</div> -->
 
 @if (winner) {
-<h2>Player {{ winner }} won the game!</h2>
-}
+<h2>{{ getWinnerMessage }}</h2>
+} @if (isDraw) {
 
+<div>
+  <h2>The game is a draw!</h2>
+</div>
+}
 <div class="container">
   @for (val of squares; track $index; let i = $index) {
   <app-box [value]="val" (click)="makeMove(i)"> </app-box>

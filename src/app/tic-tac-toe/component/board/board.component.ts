@@ -19,9 +19,9 @@ import { trigger, transition, style, animate } from '@angular/animations';
   ]
 })
 export class BoardComponent implements OnInit {
-  squares: string[] = [];
+  squares: (string | null)[] = [];  // Updated to allow 'null' values
   xIsNext: boolean = false;
-  winner: string | null = '';
+  winner: string | null = null;     // Updated to allow 'null'
   gameMode: 'human' | 'computer' = 'human';
 
   ngOnInit(): void {
@@ -42,7 +42,18 @@ export class BoardComponent implements OnInit {
   get player(): string {
     return this.xIsNext ? 'X' : 'O';
   }
-
+  get isDraw(): boolean {
+    return this.squares.every(square => square !== null) && !this.winner;
+  }
+  get getWinnerMessage(): string {
+    if (this.winner) {
+      if (this.gameMode === 'computer') {
+        return this.winner === 'O' ? 'Computer Wins!' : 'You Win!';
+      }
+      return `Player ${this.winner} Wins!`;
+    }
+    return '';
+  }
   makeMove(idx: number): void {
     if (!this.squares[idx] && !this.winner) {
       this.squares[idx] = this.player;
@@ -51,23 +62,58 @@ export class BoardComponent implements OnInit {
 
       // Delay the computer's move if in "vs Computer" mode
       if (this.gameMode === 'computer' && !this.winner && !this.xIsNext) {
-        setTimeout(() => this.computerMove(), 500); // 2-second delay
+        setTimeout(() => this.computerMove(), 500); // 500ms delay
       }
     }
   }
 
   computerMove(): void {
-    const availableMoves = this.squares
-      .map((val, idx) => (val === null ? idx : null))
-      .filter((val) => val !== null) as number[];
-
-    if (availableMoves.length > 0) {
-      const move = availableMoves[Math.floor(Math.random() * availableMoves.length)];
-      this.squares[move] = 'O';
+    const bestMove = this.minimax(this.squares, 'O').index;
+    if (bestMove !== undefined) {
+      this.squares[bestMove] = 'O';
       this.xIsNext = !this.xIsNext;
       this.winner = this.calculateWinner();
     }
   }
+
+  minimax(newSquares: (string | null)[], player: string): { score: number; index?: number } {
+    const availableMoves = newSquares.reduce<number[]>((acc, val, idx) => {
+      if (val === null) acc.push(idx);
+      return acc;
+    }, []);
+
+    // Base cases for minimax algorithm
+    const winner = this.calculateWinner();
+    if (winner === 'X') return { score: -10 };
+    if (winner === 'O') return { score: 10 };
+    if (availableMoves.length === 0) return { score: 0 };
+
+    const moves: { score: number; index: number }[] = [];
+
+    for (const idx of availableMoves) {
+      // Ensure that move has both 'index' and 'score' properties
+      const move: { score: number; index: number } = { index: idx, score: 0 };
+      newSquares[idx] = player;
+
+      // Recursive call for minimax to evaluate all potential moves
+      const result = this.minimax(newSquares, player === 'O' ? 'X' : 'O');
+      move.score = result.score;
+
+      newSquares[idx] = null;
+      moves.push(move);
+    }
+
+    // Find the best move based on the current player
+    let bestMove: { score: number; index: number };
+    if (player === 'O') {
+      bestMove = moves.reduce((best, curr) => (curr.score > best.score ? curr : best));
+    } else {
+      bestMove = moves.reduce((best, curr) => (curr.score < best.score ? curr : best));
+    }
+
+    return bestMove;
+  }
+
 
   calculateWinner(): null | string {
     const lines = [

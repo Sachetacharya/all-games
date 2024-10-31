@@ -1,14 +1,18 @@
-// Main container
+/* Main container styling */
 .container {
   display: grid;
   grid-template-columns: repeat(3, 100px);
   grid-template-rows: repeat(3, 100px);
-  gap: 5px;
+  gap: 8px;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 30px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-// Game box styling
+/* Game box styling */
 app-box {
   display: flex;
   align-items: center;
@@ -18,10 +22,12 @@ app-box {
   cursor: pointer;
   background-color: #f1f1f1;
   border: 2px solid #888;
-  transition: background-color 0.3s;
+  border-radius: 6px;
+  transition: background-color 0.3s, transform 0.2s;
 
   &:hover {
-    background-color: #ddd;
+    background-color: #e0e0e0;
+    transform: scale(1.05);
   }
 
   &:active {
@@ -29,32 +35,75 @@ app-box {
   }
 }
 
-// Current Player and Winner Status
+/* Current Player and Winner Status */
 h1,
 h2 {
   text-align: center;
   margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+  padding-top: 10px;
+}
+/* Button Group Container */
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px auto;
 }
 
-// Button styling
-button[nbButton] {
-  display: block;
-  margin: 0 auto 20px auto;
+.start-game {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Button Styling */
+button {
   font-size: 1rem;
   font-weight: bold;
-  padding: 8px 16px;
-  border: 2px solid #d9534f;
-  color: #d9534f;
-  background-color: transparent;
+  padding: 10px 20px;
+  border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
+}
 
-  &:hover {
-    background-color: #d9534f;
-    color: #fff;
-  }
+/* Vs Human Button - Blue Color */
+button.vs-human {
+  border: 2px solid #5bc0de;
+  color: #5bc0de;
+  background-color: transparent;
+}
 
-  &:focus {
-    outline: none;
-  }
+button.vs-human.active {
+  background-color: #5bc0de;
+  color: #fff;
+}
+
+/* Vs Computer Button - Orange Color */
+button.vs-computer {
+  border: 2px solid #f0ad4e;
+  color: #f0ad4e;
+  background-color: transparent;
+}
+
+button.vs-computer.active {
+  background-color: #f0ad4e;
+  color: #fff;
+}
+
+/* Start New Game Button */
+button.start-game__button {
+  border: 2px solid #d9534f;
+  color: #d9534f;
+  margin-top: 20px;
+}
+
+button.start-game__button {
+  background-color: #d9534f;
+  color: #fff;
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
 }
